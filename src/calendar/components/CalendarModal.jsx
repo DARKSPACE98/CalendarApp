@@ -29,7 +29,7 @@ export const CalendarModal = () => {
 
   const { isDateModalOpen, closeDateModal } = useUiStore(); 
 
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
 
   const [formSubmited, setFormSubmited] = useState()
   
@@ -82,7 +82,7 @@ useEffect(() => {
     closeDateModal();
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async(event) => {
     event.preventDefault();
     setFormSubmited(true);
 
@@ -97,9 +97,10 @@ useEffect(() => {
     console.log(formValues)
 
   //TODO: 
-  //CERRAR MODAL
-  // REMOVER ERRORES EN PANTALLA    
-
+  await startSavingEvent( formValues );
+  closeDateModal();
+  setFormSubmited(false);
+  
   }
 
   return (
